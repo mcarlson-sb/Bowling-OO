@@ -1,5 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {assembleBoundTextPlaceholders} from '@angular/compiler/src/render3/view/i18n/util';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
