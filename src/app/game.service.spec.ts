@@ -77,4 +77,49 @@ describe('GameService', () => {
     expect(game.score()).toBe(16);
   });
 
+  it( 'should score correctly with a gutter ball', () => {
+    game.roll(9);
+    game.roll(0);
+    game.roll(1);
+    game.roll(2);
+    expect(game.score()).toBe(12);
+  });
+
+  it( 'should score a full game correctly', () => {
+    game.roll(10);
+    expect(game.score()).toBe(0);
+    game.roll(9);
+    expect(game.score()).toBe(0);
+    game.roll(1);
+    expect(game.score()).toBe(20);
+    game.roll(5);
+    expect(game.score()).toBe(35);
+    game.roll(5);
+    expect(game.score()).toBe(35);
+    game.roll(7);
+    expect(game.score()).toBe(52);
+    game.roll(2);
+    expect(game.score()).toBe(61);
+    game.roll(10);
+    expect(game.score()).toBe(61);
+    game.roll(10);
+    expect(game.score()).toBe(61);
+    game.roll(10);
+    expect(game.score()).toBe(91);
+    game.roll(9);
+    expect(game.score()).toBe(120);
+    game.roll(0);
+    expect(game.score()).toBe(148);
+    game.roll(8);
+    expect(game.score()).toBe(148);
+    game.roll(2);
+    expect(game.score()).toBe(148);
+    game.roll(9);
+    expect(game.score()).toBe(167);
+    game.roll(1);
+    expect(game.score()).toBe(167);
+    game.roll(10);
+    expect(game.score()).toBe(187);
+  });
+
 });

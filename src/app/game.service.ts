@@ -21,7 +21,7 @@ export class GameService {
 
   roll(pins: number) {
     const remainingPins = this.updateFrames(pins);
-    if (remainingPins) {
+    if (remainingPins !== null) {
       this.addNewFrame(remainingPins);
     }
   }
@@ -29,7 +29,7 @@ export class GameService {
   private updateFrames(pins: number): number {
     for (let framesIndex = 0; framesIndex < this.frames.length; framesIndex++) {
       const frame = this.frames[framesIndex];
-      if (frame.open && pins) {
+      if (frame.open && (pins !== null)) {
         [this.frames[framesIndex], pins] = frame.roll(pins);
       }
     }
