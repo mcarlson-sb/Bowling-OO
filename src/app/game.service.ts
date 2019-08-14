@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Frame} from './frame';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
-
   frames: Frame[] = [];
+
   constructor() {
     this.frames.push(new Frame());
   }
@@ -20,18 +20,25 @@ export class GameService {
   }
 
   roll(pins: number) {
-    let framesIndex;
-    for (framesIndex = 0; framesIndex < this.frames.length; framesIndex++) {
+    const remainingPins = this.updateFrames(pins);
+    if (remainingPins) {
+      this.addNewFrame(remainingPins);
+    }
+  }
+
+  private updateFrames(pins: number): number {
+    for (let framesIndex = 0; framesIndex < this.frames.length; framesIndex++) {
       const frame = this.frames[framesIndex];
       if (frame.open && pins) {
         [this.frames[framesIndex], pins] = frame.roll(pins);
       }
     }
+    return pins;
+  }
 
-    if (pins) {
-      let newFrame = new Frame();
-      [newFrame, pins] = newFrame.roll(pins);
-      this.frames.push(newFrame);
-    }
+  private addNewFrame(remainingPins: number) {
+    let newFrame = new Frame();
+    [newFrame] = newFrame.roll(remainingPins);
+    this.frames.push(newFrame);
   }
 }

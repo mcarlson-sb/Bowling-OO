@@ -5,8 +5,7 @@ export class Frame {
   open = true;
 
   public roll(pins: number): [Frame, number] {
-    const factory = new FrameFactory();
-    return [factory.newFrame(pins), null];
+    return [new FrameFactory().newFrame(pins), null];
   }
 
   public score(): number {
