@@ -34,4 +34,47 @@ describe('GameService', () => {
     game.roll(4);
     expect(game.score()).toBe(5);
   });
+
+  it( 'should score 14 from two closed frames rolls 2,3,4,5', () => {
+    game.roll(2);
+    game.roll(3);
+    game.roll(4);
+    game.roll(5);
+    expect(game.score()).toBe(14);
+  });
+
+  it( 'should score a spare as open', () => {
+    game.roll(8);
+    game.roll(2);
+    expect(game.score()).toBe(0);
+  });
+
+  it( 'should score a closed spare, roll 8,2,1', () => {
+    game.roll(8);
+    game.roll(2);
+    game.roll(1);
+    expect(game.score()).toBe(11);
+  });
+
+  it( 'should score a closed spare and closed regular, roll 8,2,1,4', () => {
+    game.roll(8);
+    game.roll(2);
+    game.roll(1);
+    game.roll(4);
+    expect(game.score()).toBe(16);
+  });
+
+  it( 'should score an open strike', () => {
+    game.roll(10);
+    game.roll(1);
+    expect(game.score()).toBe(0);
+  });
+
+  it( 'should score an close strike', () => {
+    game.roll(10);
+    game.roll(1);
+    game.roll(2);
+    expect(game.score()).toBe(16);
+  });
+
 });

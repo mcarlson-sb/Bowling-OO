@@ -14,23 +14,24 @@ export class GameService {
   score() {
     let score = 0;
     for (const frame of this.frames) {
-      if (frame.closed) {
-        for (const roll of frame.rolls) {
-          score += roll;
-        }
-      }
+      score += frame.score();
     }
     return score;
   }
 
   roll(pins: number) {
-    for (const frame of this.frames) {
-      if (!frame.closed) {
-        frame.roll(pins);
-      } else {
-        const newFrame = new Frame();
-        this.frames.push(newFrame);
+    let framesIndex;
+    for (framesIndex = 0; framesIndex < this.frames.length; framesIndex++) {
+      const frame = this.frames[framesIndex];
+      if (!frame.closed && pins) {
+        [this.frames[framesIndex], pins] = frame.roll(pins);
       }
+    }
+
+    if (pins) {
+      let newFrame = new Frame();
+      [newFrame, pins] = newFrame.roll(pins);
+      this.frames.push(newFrame);
     }
   }
 }
