@@ -14,7 +14,7 @@ export class RegularFrame extends Frame {
     }
 
     this.rolls.push(pins);
-    this.closed = true;
+    this.open = false;
     return [this, null];
   }
 
@@ -28,12 +28,14 @@ export class RegularFrame extends Frame {
   }
 
   public score(): number {
+    if (this.open) {
+      return 0;
+    }
+
     let score = 0;
-    if (this.closed) {
-      for (const roll of this.rolls) {
+    for (const roll of this.rolls) {
         score += roll;
       }
-    }
     return score;
   }
 }

@@ -23,7 +23,7 @@ export class GameService {
     let framesIndex;
     for (framesIndex = 0; framesIndex < this.frames.length; framesIndex++) {
       const frame = this.frames[framesIndex];
-      if (!frame.closed && pins) {
+      if (frame.open && pins) {
         [this.frames[framesIndex], pins] = frame.roll(pins);
       }
     }

@@ -2,7 +2,7 @@ import {FrameFactory} from './frame-factory';
 
 export class Frame {
   rolls = [];
-  closed = false;
+  open = true;
 
   public roll(pins: number): [Frame, number] {
     const factory = new FrameFactory();

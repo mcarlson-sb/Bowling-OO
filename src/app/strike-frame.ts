@@ -11,20 +11,22 @@ export class StrikeFrame extends Frame {
   public roll(pins: number): [Frame, number] {
     this.bonusRolls.push(pins);
     if (this.bonusRolls.length === 2) {
-      this.closed = true;
+      this.open = false;
     }
     return [this, pins];
   }
 
   public score(): number {
+    if (this.open) {
+      return 0;
+    }
+
     let score = 0;
-    if (this.closed) {
-      for (const roll of this.rolls) {
-        score += roll;
-      }
-      for (const bonus of this.bonusRolls) {
-        score += bonus;
-      }
+    for (const roll of this.rolls) {
+      score += roll;
+    }
+    for (const bonus of this.bonusRolls) {
+      score += bonus;
     }
     return score;
   }
