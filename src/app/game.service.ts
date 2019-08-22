@@ -28,12 +28,16 @@ export class GameService {
   private updateFrames(pins: number): number {
     if (this.isFirstFrame()) {
       this.addNewFrame(pins);
-      pins = null;
-    } else {
-      for ( const frame of this.frames ) {
-        if (pins !== null) {
-          pins = frame.roll(pins);
-        }
+      return null;
+    }
+
+    return this.applyPinsToFrames(pins);
+  }
+
+  private applyPinsToFrames(pins: number) {
+    for (const frame of this.frames) {
+      if (pins !== null) {
+        pins = frame.roll(pins);
       }
     }
     return pins;
