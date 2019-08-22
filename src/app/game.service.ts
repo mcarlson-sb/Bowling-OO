@@ -26,10 +26,8 @@ export class GameService {
   }
 
   private updateFrames(pins: number): number {
-    if (this.frames.length === 0) {
-      const context = new FrameContext();
-      this.frames.push(context);
-      context.roll(pins);
+    if (this.isFirstFrame()) {
+      this.addNewFrame(pins);
       pins = null;
     } else {
       for ( const frame of this.frames ) {
@@ -41,9 +39,13 @@ export class GameService {
     return pins;
   }
 
-  private addNewFrame(remainingPins: number) {
+  private isFirstFrame() {
+    return this.frames.length === 0;
+  }
+
+  private addNewFrame(pins: number) {
     const newFrame = new FrameContext();
-    newFrame.roll(remainingPins);
+    newFrame.roll(pins);
     this.frames.push(newFrame);
   }
 }
