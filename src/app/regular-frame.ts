@@ -1,11 +1,14 @@
 import {SpareFrame} from './spare-frame';
 import {StrikeFrame} from './strike-frame';
 import {Frame} from './frame';
-import {FrameContext} from './frame-context';
 
 export class RegularFrame extends Frame {
 
   public roll(pins: number): number {
+    if (!this.open) {
+      return pins;
+    }
+
     if (this.isStrike(pins)) {
       this.context.setState(new StrikeFrame(this.context));
       return null;

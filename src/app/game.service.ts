@@ -33,7 +33,7 @@ export class GameService {
       pins = null;
     } else {
       for ( const frame of this.frames ) {
-        if (frame.isOpen() && pins !== null) {
+        if (pins !== null) {
           pins = frame.roll(pins);
         }
       }

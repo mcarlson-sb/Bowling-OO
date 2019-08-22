@@ -10,14 +10,22 @@ export class SpareFrame extends Frame {
   }
 
   public roll(pins: number): number {
-    if (this.rolls.length === 2) {
+    if (!this.open) {
+      return pins;
+    }
+
+    if (this.isBonusRoll()) {
       this.bonusRolls.push(pins);
       this.open = false;
-    } else {
-      this.rolls.push(pins);
-      pins = null;
+      return pins;
     }
-    return pins;
+
+    this.rolls.push(pins);
+    return null;
+  }
+
+  private isBonusRoll() {
+    return this.rolls.length === 2;
   }
 
   public score(): number {

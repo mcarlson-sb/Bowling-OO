@@ -10,6 +10,10 @@ export class StrikeFrame extends Frame {
   }
 
   public roll(pins: number): number {
+    if (!this.open) {
+      return pins;
+    }
+
     this.bonusRolls.push(pins);
     if (this.bonusRolls.length === 2) {
       this.open = false;
