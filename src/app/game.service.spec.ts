@@ -70,7 +70,7 @@ describe('GameService', () => {
     expect(game.score()).toBe(0);
   });
 
-  it( 'should score an close strike', () => {
+  it( 'should score a closed strike', () => {
     game.roll(10);
     game.roll(1);
     game.roll(2);

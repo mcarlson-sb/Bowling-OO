@@ -1,14 +1,15 @@
-import {FrameFactory} from './frame-factory';
+import {FrameContext} from './frame-context';
 
-export class Frame {
+export abstract class Frame {
   rolls = [];
   open = true;
 
-  public roll(pins: number): [Frame, number] {
-    return [new FrameFactory().newFrame(pins), null];
+  protected context: FrameContext;
+  constructor(context: FrameContext) {
+    this.context = context;
   }
 
-  public score(): number {
-    return 0;
-  }
+  public abstract roll(pins: number): number ;
+
+  public abstract score(): number;
 }

@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
-import {Frame} from './frame';
+import {FrameContext} from './frame-context';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
-  frames: Frame[] = [];
+  frames: FrameContext[] = [];
 
   constructor() {
-    this.frames.push(new Frame());
   }
 
   score() {
@@ -27,18 +26,24 @@ export class GameService {
   }
 
   private updateFrames(pins: number): number {
-    for (let framesIndex = 0; framesIndex < this.frames.length; framesIndex++) {
-      const frame = this.frames[framesIndex];
-      if (frame.open && (pins !== null)) {
-        [this.frames[framesIndex], pins] = frame.roll(pins);
+    if (this.frames.length === 0) {
+      const context = new FrameContext();
+      this.frames.push(context);
+      context.roll(pins);
+      pins = null;
+    } else {
+      for ( const frame of this.frames ) {
+        if (frame.isOpen() && pins !== null) {
+          pins = frame.roll(pins);
+        }
       }
     }
     return pins;
   }
 
   private addNewFrame(remainingPins: number) {
-    let newFrame = new Frame();
-    [newFrame] = newFrame.roll(remainingPins);
+    const newFrame = new FrameContext();
+    newFrame.roll(remainingPins);
     this.frames.push(newFrame);
   }
 }

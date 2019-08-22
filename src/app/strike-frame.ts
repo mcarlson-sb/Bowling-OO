@@ -1,19 +1,20 @@
 import {Frame} from './frame';
+import {FrameContext} from './frame-context';
 
 export class StrikeFrame extends Frame {
   bonusRolls = [];
 
-  constructor() {
-    super();
+  constructor(context: FrameContext) {
+    super(context);
     this.rolls.push(10);
   }
 
-  public roll(pins: number): [Frame, number] {
+  public roll(pins: number): number {
     this.bonusRolls.push(pins);
     if (this.bonusRolls.length === 2) {
       this.open = false;
     }
-    return [this, pins];
+    return pins;
   }
 
   public score(): number {

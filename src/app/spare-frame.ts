@@ -1,18 +1,23 @@
 import {Frame} from './frame';
+import {FrameContext} from './frame-context';
 
 export class SpareFrame extends Frame {
   bonusRolls = [];
 
-  constructor(rolls: any[], pins: number) {
-    super();
+  constructor(context: FrameContext, rolls: number[]) {
+    super(context);
     this.rolls = rolls;
-    this.rolls.push(pins);
   }
 
-  public roll(pins: number): [Frame, number] {
-    this.bonusRolls.push(pins);
-    this.open = false;
-    return [this, pins];
+  public roll(pins: number): number {
+    if (this.rolls.length === 2) {
+      this.bonusRolls.push(pins);
+      this.open = false;
+    } else {
+      this.rolls.push(pins);
+      pins = null;
+    }
+    return pins;
   }
 
   public score(): number {

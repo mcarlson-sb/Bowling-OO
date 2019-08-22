@@ -1,21 +1,30 @@
-import {Frame} from './frame';
 import {SpareFrame} from './spare-frame';
+import {StrikeFrame} from './strike-frame';
+import {Frame} from './frame';
+import {FrameContext} from './frame-context';
 
 export class RegularFrame extends Frame {
 
-  constructor(pins: number) {
-    super();
-    this.rolls.push(pins);
-  }
-
-  public roll(pins: number): [Frame, number] {
+  public roll(pins: number): number {
+    if (this.isStrike(pins)) {
+      this.context.setState(new StrikeFrame(this.context));
+      return null;
+    }
     if (this.isSpare(pins)) {
-      return [new SpareFrame(this.rolls, pins), null];
+      this.context.setState(new SpareFrame(this.context, this.rolls));
+      this.context.roll(pins);
+      return null;
     }
 
     this.rolls.push(pins);
-    this.open = false;
-    return [this, null];
+    if (this.rolls.length === 2) {
+      this.open = false;
+    }
+    return null;
+  }
+
+  private isStrike(pins: number) {
+    return (this.rolls.length === 0 && pins === 10);
   }
 
   private isSpare(pins: number) {
